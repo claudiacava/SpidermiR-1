@@ -232,6 +232,14 @@ list<-SpidermiRdownload_miRNAvalidate(validated)
 ```
 
 
+## `SpidermiRdownload_miRNAextra_cir`:Download Extracellular Circulating microRNAs
+The user can download Pharmaco-miR Verified Sets from miRandola database
+
+```{r, eval = FALSE}
+list<-SpidermiRdownload_miRNAextra_cir(miRNAextra_cir)
+```
+
+
 ## `SpidermiRdownload_pharmacomir`: Download Pharmaco-miR Verified Sets from PharmacomiR database
 The user can download Pharmaco-miR Verified Sets from PharmacomiR database [@ref6].
 
