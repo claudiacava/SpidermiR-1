@@ -41,10 +41,13 @@ SpidermiRvisualize_mirnanet<-function(data){
     # Order rows
     attr2 <- attr2[order(attr2$ID),]
     #attr2<-as.data.frame(attr2[ order(attr2$Group,decreasing = FALSE ),]) 
+    ColourScale <- 'd3.scale.ordinal()
+            .domain(["gene", "Pharmaco","miRNA"])
+  .range(["#0096ff", "#00b34a","#ff6900"]);'
     return(
       forceNetwork(Links = dataIDs2, Nodes = attr2, Source = "V1", Target = "V2", NodeID = "name", Group= "Group",height = 
-                     800, width = 800, opacity = 1, zoom = FALSE, bounded = TRUE, legend= TRUE, opacityNoHover= 0.5,
-                   colourScale=JS("d3.scale.category10()"),fontSize = 12)
+                     1000, width = 1000, opacity = 1, zoom = FALSE, bounded = TRUE, legend= TRUE, opacityNoHover= 0.5,
+                   colourScale=JS(ColourScale),fontSize = 16)
     )
   }
   if( length(grep("hsa",data$V1)) ==0){
@@ -95,10 +98,13 @@ SpidermiRvisualize_BI<-function(data,BI){
   attr2 <- merge(att, IDs2)
   # Order rows
   attr2 <- attr2[order(attr2$ID),]
+  ColourScale <- 'd3.scale.ordinal()
+            .domain(["biomarker of interest", "biomarker interaction"])
+  .range(["#0096ff", "#0017ff"]);'
   return(
     forceNetwork(Links = dataIDs2, Nodes = attr2, Source = "V1", Target = "V2", NodeID = "name", Group= "Group",height = 800, width = 800, opacity = 1, zoom = FALSE, bounded = TRUE, legend= TRUE, opacityNoHover= 0.5,
-                 colourScale=JS("d3.scale.category20c()")
-                 ,fontSize = 12))
+                 colourScale=JS(ColourScale)
+                 ,fontSize = 18))
 }
 
 
@@ -131,3 +137,6 @@ return(grid.arrange(ggplot(D, aes(x = miRNAs, y = miRNAs_target)) + geom_bar(sta
           axis.text.x  = element_text(angle=360, vjust=0.5, size=16),axis.title.y = element_text(face="bold", size=16),
           axis.text.y  = element_text(angle=360, vjust=0.5, size=16)))
 }
+
+
+

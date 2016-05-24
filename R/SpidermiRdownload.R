@@ -120,6 +120,7 @@ SpidermiRdownload_miRNAvalidate<-function(validated){
 }
 
 
+
 #' @title Download miRNA validated database
 #' @description SpidermiRdownload_miRNAprediction will download miRNA validated target
 #' @param miRNAextra_cir parameter
