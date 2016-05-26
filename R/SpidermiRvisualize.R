@@ -111,10 +111,10 @@ SpidermiRvisualize_BI<-function(data,BI){
 
 #' @title Visualize results obtained by SpidermiRanalyze_mirna_network 
 #' @description It shows a plot with miRNAs and the number of their targets in the network
-#' @param miRnet The input data is a dataframe containing miRNA network data (e.g. output of SpidermiRanalyze_mirna_network.
+#' @param data The input data is a dataframe containing miRNA network data (e.g. output of SpidermiRanalyze_mirna_network.
 #' @examples 
 #' cd<-data.frame(gA=c('hsa-let-7a','hsa-miR-141'),gB=c('FOXM1','CDK'),stringsAsFactors=FALSE)
-#' SpidermiRvisualize_plot_target(miRnet=cd)
+#' SpidermiRvisualize_plot_target(data=cd)
 #' @importFrom ggplot2 ggplot 
 #' @importFrom ggplot2 aes 
 #' @importFrom ggplot2 geom_bar
@@ -124,8 +124,8 @@ SpidermiRvisualize_BI<-function(data,BI){
 #' @importFrom gridExtra grid.arrange
 #' @export
 #' @return plot
-SpidermiRvisualize_plot_target<-function(miRnet){
-p<-table(miRnet[,1])
+SpidermiRvisualize_plot_target<-function(data){
+p<-table(data[,1])
 as<-as.data.frame(p)
 D<-as[order(as$Freq,decreasing=TRUE),]
 names(D)[1]<-"miRNAs"
@@ -136,6 +136,86 @@ D$miRNAs<-factor(D$miRNAs, levels=D[order(D$miRNAs_target),"miRNAs"])
 return(grid.arrange(ggplot(D, aes(x = miRNAs, y = miRNAs_target)) + geom_bar(stat = "identity")+ coord_flip(),ncol=2) + theme(axis.title.x = element_text(face="bold", size=16),
           axis.text.x  = element_text(angle=360, vjust=0.5, size=16),axis.title.y = element_text(face="bold", size=16),
           axis.text.y  = element_text(angle=360, vjust=0.5, size=16)))
+}
+
+
+
+#' @title plots the degree distribution of the network
+#' @description It shows a plot of the degree distribution of the network
+#' @param data The input data is a network
+#' @examples 
+#' cd<-data.frame(gA=c('hsa-let-7a','hsa-miR-141'),gB=c('FOXM1','CDK'),stringsAsFactors=FALSE)
+#' SpidermiRvisualize_degree_dist(data=cd)
+#' @importFrom igraph graph.data.frame degree.distribution 
+#' @export
+#' @return plot
+SpidermiRvisualize_degree_dist<-function(data){
+  g <- graph.data.frame(data,directed=FALSE)
+dd <- degree.distribution(g, cumulative=T, mode="all")
+return(plot(dd, pch=19, cex=1, col="orange", xlab="Degree", ylab="Cumulative Frequency")
+)
+}
+
+
+#' @title plots the adjacency matrix of the network
+#' @description It shows a plot OF the adjacency matrix of the network
+#' @param data The input data is a network
+#' @examples 
+#' cd<-data.frame(gA=c('hsa-let-7a','hsa-miR-141'),gB=c('FOXM1','CDK'),stringsAsFactors=FALSE)
+#' SpidermiRvisualize_adj_matrix(data=cd)
+#' @importFrom igraph graph.data.frame as_adjacency_matrix ecount get.adjacency E E<-
+#' @importFrom grDevices colorRampPalette
+#' @importFrom stats  runif
+#' @importFrom gplots heatmap.2
+#' @export
+#' @return plot
+SpidermiRvisualize_adj_matrix<-function(data){
+  #Convert a graph to an adjacency matrix
+  g <- graph.data.frame(data,directed=FALSE)
+  as_adjacency_matrix(g)
+  E(g)$weight <- runif(ecount(g))
+  netm <- get.adjacency(g, attr="weight", sparse=F)
+  scaleyellowred <- colorRampPalette(c("red","yellow"), space = "rgb")(100)
+  lhei <- c(7, 4)
+  lwid=c(7, 4, 4 )
+  return(heatmap.2(netm,dendrogram="none",Rowv=FALSE, Colv=FALSE,
+            col=scaleyellowred,scale="none",key=TRUE, keysize=1.5,
+            density.info="none", trace="none", cexRow=1,cexCol=1,margins = c(7, 7),lhei)
+         )}
+  
+
+
+#' @title plots the 3D barplot
+#' @description It shows a barplot of 5 networks given by the user with a summary representation of number of nodes, edges, and miRNAs (log values)
+#' @param Edges_1net 
+#' @param Edges_2net 
+#' @param Edges_3net 
+#' @param Edges_4net 
+#' @param Edges_5net 
+#' @param NODES_1net 
+#' @param NODES_2net 
+#' @param NODES_3net 
+#' @param NODES_4net 
+#' @param NODES_5net 
+#' @param nmiRNAs_1net 
+#' @param nmiRNAs_2net 
+#' @param nmiRNAs_3net 
+#' @param nmiRNAs_4net 
+#' @param nmiRNAs_5net 
+#' @examples 
+#' SpidermiRvisualize_3Dbarplot(Edges_1net=1041003,Edges_2net=100016,Edges_3net=3008,Edges_4net=1493,Edges_5net=1598,NODES_1net=16502,NODES_2net=13338,NODES_3net=1429,NODES_4net=675,NODES_5net=712,nmiRNAs_1net=0,nmiRNAs_2net=74,nmiRNAs_3net=0,nmiRNAs_4net=0,nmiRNAs_5net=37)
+#' @importFrom lattice cloud 
+#' @importFrom  latticeExtra panel.3dbars
+#' @export
+#' @return barplot
+SpidermiRvisualize_3Dbarplot<-function(Edges_1net,Edges_2net,Edges_3net,Edges_4net,Edges_5net,NODES_1net,NODES_2net,NODES_3net,NODES_4net,NODES_5net,nmiRNAs_1net,nmiRNAs_2net,nmiRNAs_3net,nmiRNAs_4net,nmiRNAs_5net){
+  y <- as.factor(c("1net","2net","3net","4net","5net","1net","2net","3net","4net","5net","1net","2net","3net","4net","5net"))
+  x<-c(round(log(Edges_1net)),round(log(Edges_2net)),round(log(Edges_3net)),round(log(Edges_4net)),round(log(Edges_5net)),round(log(NODES_1net)),round(log(NODES_2net)),round(log(NODES_3net)),round(log(NODES_4net)),round(log(NODES_5net)),round(log(nmiRNAs_1net)),round(log(nmiRNAs_2net)),round(log(nmiRNAs_3net)),round(log(nmiRNAs_4net)),round(log(nmiRNAs_5net)))
+  z<-as.factor(c("edges","edges","edges","edges","edges","nodes","nodes","nodes","nodes","nodes","miRNAs","miRNAs","miRNAs","miRNAs","miRNAs"))
+  cloud(x
+        ~y+z, panel.3d.cloud=panel.3dbars, col.facet='green',  screen = list(z = -50, x = -30),
+        xbase=0.8, ybase=0.3, scales=list(arrows=FALSE, col=1), 
+        par.settings = list(axis.line = list(col = "transparent")))
 }
 
 
