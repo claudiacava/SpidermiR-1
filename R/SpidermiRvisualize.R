@@ -187,21 +187,21 @@ SpidermiRvisualize_adj_matrix<-function(data){
 
 #' @title plots the 3D barplot
 #' @description It shows a barplot of 5 networks given by the user with a summary representation of number of nodes, edges, and miRNAs (log values)
-#' @param Edges_1net 
-#' @param Edges_2net 
-#' @param Edges_3net 
-#' @param Edges_4net 
-#' @param Edges_5net 
-#' @param NODES_1net 
-#' @param NODES_2net 
-#' @param NODES_3net 
-#' @param NODES_4net 
-#' @param NODES_5net 
-#' @param nmiRNAs_1net 
-#' @param nmiRNAs_2net 
-#' @param nmiRNAs_3net 
-#' @param nmiRNAs_4net 
-#' @param nmiRNAs_5net 
+#' @param Edges_1net int number of edges in the 1 net
+#' @param Edges_2net int number of edges in the 2 net
+#' @param Edges_3net int number of edges in the 3 net
+#' @param Edges_4net int number of edges in the 4 net
+#' @param Edges_5net int number of edges in the 5 net
+#' @param NODES_1net int number of nodes in the 1 net
+#' @param NODES_2net int number of nodes in the 2 net
+#' @param NODES_3net int number of nodes in the 3 net
+#' @param NODES_4net int number of nodes in the 4 net
+#' @param NODES_5net int number of nodes in the 5 net
+#' @param nmiRNAs_1net int number of miRNAs in the 1 net
+#' @param nmiRNAs_2net int number of miRNAs in the 2 net
+#' @param nmiRNAs_3net int number of miRNAs in the 3 net
+#' @param nmiRNAs_4net int number of miRNAs in the 4 net
+#' @param nmiRNAs_5net int number of miRNAs in the 5 net
 #' @examples 
 #' SpidermiRvisualize_3Dbarplot(Edges_1net=1041003,Edges_2net=100016,Edges_3net=3008,Edges_4net=1493,Edges_5net=1598,NODES_1net=16502,NODES_2net=13338,NODES_3net=1429,NODES_4net=675,NODES_5net=712,nmiRNAs_1net=0,nmiRNAs_2net=74,nmiRNAs_3net=0,nmiRNAs_4net=0,nmiRNAs_5net=37)
 #' @importFrom lattice cloud 

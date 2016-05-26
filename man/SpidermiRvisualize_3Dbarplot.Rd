@@ -9,35 +9,35 @@ SpidermiRvisualize_3Dbarplot(Edges_1net, Edges_2net, Edges_3net, Edges_4net,
   nmiRNAs_1net, nmiRNAs_2net, nmiRNAs_3net, nmiRNAs_4net, nmiRNAs_5net)
 }
 \arguments{
-\item{Edges_1net}{}
+\item{Edges_1net}{int number of edges in the 1 net}
 
-\item{Edges_2net}{}
+\item{Edges_2net}{int number of edges in the 2 net}
 
-\item{Edges_3net}{}
+\item{Edges_3net}{int number of edges in the 3 net}
 
-\item{Edges_4net}{}
+\item{Edges_4net}{int number of edges in the 4 net}
 
-\item{Edges_5net}{}
+\item{Edges_5net}{int number of edges in the 5 net}
 
-\item{NODES_1net}{}
+\item{NODES_1net}{int number of nodes in the 1 net}
 
-\item{NODES_2net}{}
+\item{NODES_2net}{int number of nodes in the 2 net}
 
-\item{NODES_3net}{}
+\item{NODES_3net}{int number of nodes in the 3 net}
 
-\item{NODES_4net}{}
+\item{NODES_4net}{int number of nodes in the 4 net}
 
-\item{NODES_5net}{}
+\item{NODES_5net}{int number of nodes in the 5 net}
 
-\item{nmiRNAs_1net}{}
+\item{nmiRNAs_1net}{int number of miRNAs in the 1 net}
 
-\item{nmiRNAs_2net}{}
+\item{nmiRNAs_2net}{int number of miRNAs in the 2 net}
 
-\item{nmiRNAs_3net}{}
+\item{nmiRNAs_3net}{int number of miRNAs in the 3 net}
 
-\item{nmiRNAs_4net}{}
+\item{nmiRNAs_4net}{int number of miRNAs in the 4 net}
 
-\item{nmiRNAs_5net}{}
+\item{nmiRNAs_5net}{int number of miRNAs in the 5 net}
 }
 \value{
 barplot
