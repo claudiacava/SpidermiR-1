@@ -53,5 +53,7 @@ Suggests:
 	roxygen2
 VignetteBuilder: knitr
 LazyData: true
+URL: https://github.com/claudiacava/SpidermiR
+BugReports: https://github.com/claudiacava/SpidermiR/issues
 RoxygenNote: 5.0.1
 
