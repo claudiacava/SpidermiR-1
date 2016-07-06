@@ -88,6 +88,7 @@ SpidermiRdownload_miRNAprediction<-function(mirna_list){
   top[top == 0] <- NA
   top[apply(top,1,function(x)any(!is.na(x))),]
   top<-t(top)
+  top<-int(top)
   return(top)
 }
 
