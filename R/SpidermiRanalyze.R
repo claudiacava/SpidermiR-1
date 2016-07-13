@@ -28,8 +28,7 @@ SpidermiRanalyze_mirna_network<-function(data,miR_trg,mirna_t=NULL,disease=NULL)
   mir2disease<-rbind(mir2disease,se)
   }
   if( miR_trg=="pred"){
-    a<-SpidermiRdownload_miRNAprediction(mirna_t)
-    mir2disease<-int(a)
+    mir2disease<-SpidermiRdownload_miRNAprediction(mirna_t)
   }
   #for the disease
   all_entries<-.url_cache$get("miR2Disease")
@@ -118,8 +117,7 @@ SpidermiRanalyze_mirna_gene_complnet<-function(data,miR_trg,mirna_t=NULL,disease
   }
   
   if( miR_trg=="pred"){
-    a<-SpidermiRdownload_miRNAprediction(mirna_t)
-    mir2disease<-int(a)
+    mir2disease<-SpidermiRdownload_miRNAprediction(mirna_t)
   }
   
   #for the disease
