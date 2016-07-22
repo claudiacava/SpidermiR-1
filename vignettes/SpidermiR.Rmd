@@ -432,7 +432,7 @@ Starting from a graphical representation of a network, the user can highlight wi
 ```{r, eval = TRUE}
 
 biomark_of_interest<-c("hsa-let-7b","MUC1","PEX7","hsa-miR-222")
-SpidermiRvisualize_BI(data=miRNA_NET,BI=biomark_of_interest)
+SpidermiRvisualize_BI(data=mir_pharmnet[sample(nrow(mir_pharmnet), 150), ] ,BI=biomark_of_interest)
 ```
 
 ## `SpidermiRvisualize_plot_target`: Visualize the plot with miRNAs and the number of their targets in the network. 

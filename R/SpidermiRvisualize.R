@@ -87,9 +87,17 @@ SpidermiRvisualize_BI<-function(data,BI){
   att<-as.data.frame(sort(unique(unlist(data))))
   colnames(att)[1]<-"v1"
   att$v2 <- "" 
+  att$v2[(grep("[a-z]",att$v1))]<- "Pharmaco"
+  att$v2[grep("hsa" ,att$v1)]<- "miRNA"
+  
   for (j in 1:length(BI)){
     att$v2[grep(BI[j] ,att$v1)]<- "biomarker of interest"}
-  att$v2<-replace(att$v2, att$v2 == "", "biomarker interaction")
+
+  att$v2[grep("orf" ,att$v1)]<- "gene"
+  att$v2<-replace(att$v2, att$v2 == "", "gene")
+  
+  
+  
   #att$v1 <- "name"
   i <- sapply(att, is.factor)
   att[i] <- lapply(att[i], as.character)
@@ -99,12 +107,13 @@ SpidermiRvisualize_BI<-function(data,BI){
   # Order rows
   attr2 <- attr2[order(attr2$ID),]
   ColourScale <- 'd3.scale.ordinal()
-            .domain(["biomarker of interest", "biomarker interaction"])
-  .range(["#0096ff", "#0017ff"]);'
+.domain(["gene", "Pharmaco","miRNA","biomarker of interest"])
+  .range(["#0096ff", "#00b34a","#ff6900","#ffe900"]);'
+
   return(
-    forceNetwork(Links = dataIDs2, Nodes = attr2, Source = "V1", Target = "V2", NodeID = "name", Group= "Group",height = 800, width = 800, opacity = 1, zoom = FALSE, bounded = TRUE, legend= TRUE, opacityNoHover= 0.5,
-                 colourScale=JS(ColourScale)
-                 ,fontSize = 18))
+    forceNetwork(Links = dataIDs2, Nodes = attr2, Source = "V1", Target = "V2", NodeID = "name", Group= "Group",height = 
+                   1000, width = 1000, opacity = 1, zoom = FALSE, bounded = TRUE, legend= TRUE, opacityNoHover= 0.5,
+                 colourScale=JS(ColourScale),fontSize = 16))
 }
 
 
