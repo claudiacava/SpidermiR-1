@@ -173,7 +173,7 @@ The network category can be filtered using the following parameters:
 * **GENint** Genetic_interactions 
 * **PATH** Pathway 
 * **SHpd**  Shared_protein_domains 
-
+* **pred**  predicted
 
 ```{r, eval = TRUE}
 
