@@ -435,6 +435,15 @@ biomark_of_interest<-c("hsa-let-7b","MUC1","PEX7","hsa-miR-222")
 SpidermiRvisualize_BI(data=mir_pharmnet[sample(nrow(mir_pharmnet), 150), ] ,BI=biomark_of_interest)
 ```
 
+
+## `SpidermiRvisualize_direction`: To visualize the network 
+```{r, eval = TRUE}
+library(visNetwork)
+
+SpidermiRvisualize_direction(data=mir_pharmnet[sample(nrow(mir_pharmnet), 30), ] )
+```
+
+
 ## `SpidermiRvisualize_plot_target`: Visualize the plot with miRNAs and the number of their targets in the network. 
 For each BI of a community, the user can visualize a plot showing the number of direct neighbours of such BI (the degree centrality of such BI).
 
