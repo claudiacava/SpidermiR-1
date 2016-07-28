@@ -138,11 +138,11 @@ p<-table(data[,1])
 as<-as.data.frame(p)
 D<-as[order(as$Freq,decreasing=TRUE),]
 names(D)[1]<-"miRNAs"
-names(D)[2]<-"miRNAs_target"
-D$miRNAs<-factor(D$miRNAs, levels=D[order(D$miRNAs_target),"miRNAs"])
+names(D)[2]<-"mRNA_target"
+D$miRNAs<-factor(D$miRNAs, levels=D[order(D$mRNA_target),"miRNAs"])
 
 
-return(grid.arrange(ggplot(D, aes(x = miRNAs, y = miRNAs_target)) + geom_bar(stat = "identity")+ coord_flip(),ncol=2) + theme(axis.title.x = element_text(face="bold", size=16),
+return(grid.arrange(ggplot(D, aes(x = miRNAs, y = mRNA_target)) + geom_bar(stat = "identity")+ coord_flip(),ncol=2) + theme(axis.title.x = element_text(face="bold", size=16),
           axis.text.x  = element_text(angle=360, vjust=0.5, size=16),axis.title.y = element_text(face="bold", size=16),
           axis.text.y  = element_text(angle=360, vjust=0.5, size=16)))
 }
@@ -246,7 +246,7 @@ SpidermiRvisualize_direction<-function(data){
   for (i in 1:nrow(data)){
     label[i]<-as.character(paste("Edge",i))
   }
-  length=rep(1,nrow(data))
+  length=rep(100,nrow(data))
   edges2<-data.frame(from,to,label,length)
   edges2$arrows<-""
   edges2$arrows[(grep("hsa",edges2$from))]<-"to"
@@ -310,7 +310,7 @@ SpidermiRvisualize_direction<-function(data){
   nodes2$shadow<-""
   nodes2$shadow<-c(rep("FALSE",length(id)))
   return(visNetwork(nodes2, edges2, width = "200%")%>% visLegend(useGroups = FALSE, addNodes = data.frame(label = c("mirna","pharmaco","gene"), shape = c("box","ellipse","circle"),color=c("orange","green","lightblue") )
-  )%>% visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = FALSE) )
+  )%>% visInteraction(dragNodes = TRUE, dragView = TRUE, zoomView = TRUE) )
 }
 
 

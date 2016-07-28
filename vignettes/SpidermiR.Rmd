@@ -519,7 +519,7 @@ ds<-do.call("rbind", geneSymb_net)
 data1<-as.data.frame(ds[!duplicated(ds), ]) 
 
 sdas<-cbind(data1$gene_symbolA,data1$gene_symbolB)
-
+sdas<-as.data.frame(sdas[!duplicated(sdas), ]) 
 miRNA_NET<-SpidermiRanalyze_mirna_network(data=geneSymb_net,disease="breast cancer")
 topwhol<-SpidermiRanalyze_degree_centrality(sdas)
 top10_cent_gene<-SpidermiRanalyze_degree_centrality(miRNA_NET)
