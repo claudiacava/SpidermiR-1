@@ -513,5 +513,61 @@ SpidermiRanalyze_mirnanet_pharm<-function(mir_ph,net){
 }
 
 
-
-
+#' @title Integration with TCGA data in order to obtain a network of  differentially expressed (DE) genes or miRNAs.
+#' @description SpidermiRanalyze_DEnetworkTCGA integrates the information of differential analysis of TCGA data in the network. The final result will be a network with only DE genes or miRNAs depending  whether the user chooses to mRNA or miRNA  TCGA data.
+#' @param data  network data (e.g. shared protein domains, co-expression,..)
+#' @param cancer  cancer type See TCGAbiolinks package 
+#' @param PlatformCancer platform See TCGAbiolinks package
+#' @param tumour barcode TCGA tumour data
+#' @param normal barcode TCGA normal data
+#' @param path Directory with the files downloaded by GDCdownload
+#' @importFrom TCGAbiolinks GDCquery GDCdownload GDCprepare TCGAanalyze_Preprocessing TCGAanalyze_Normalization TCGAanalyze_Filtering TCGAanalyze_DEA
+#' @export
+#' @return a network miRNA-gene differentially expressed as calculated by TCGAbiolinks package. The user can select the samples and cancer type from TCGA portal.
+#' @examples
+#' devtools::install_github("BioinformaticsFMRP/TCGAbiolinks")
+#' library(TCGAbiolinks)
+#' miRNA_cN <-data.frame(gA=c('hsa-let-7a','SSTR1'),gB=c('FOXM1','GATA5'),stringsAsFactors=FALSE)
+#' cancer <- "TCGA-BRCA"
+#' PlatformCancer <- "Illumina HiSeq"
+#' tumour<-c("TCGA-BH-A0DL-01A-11R-A115-07","TCGA-AO-A03P-01A-11R-A00Z-07")
+#' normal<-c("TCGA-BH-A209-11A-42R-A157-07","TCGA-E9-A1N4-11A-33R-A14M-07") 
+#' de_int<-SpidermiRanalyze_DEnetworkTCGA(data=miRNA_cN,
+#'                                        cancer,
+#'                                        PlatformCancer,
+#'                                        tumour,
+#'                                        normal,
+#'                                        path = "exampleData")
+SpidermiRanalyze_DEnetworkTCGA <- function(data,
+                                           cancer,
+                                           PlatformCancer,
+                                           tumour,
+                                           normal,
+                                           path ){
+  
+  dataType <- "normalized_results"
+  
+  query <- GDCquery(project = cancer,
+                    data.category = "Gene expression",
+                    data.type = "Gene expression quantification",
+                    platform = PlatformCancer, 
+                    file.type  = dataType, 
+                    barcode = c(tumour,normal),
+                    legacy = TRUE)
+  GDCdownload(query,method = "client",directory = path)
+  dataAssy <- GDCprepare(query,  directory = path, summarizedExperiment = FALSE)
+  
+  dataFilt <- TCGAanalyze_Filtering(tabDF = dataAssy,
+                                    method = "quantile", 
+                                    qnt.cut =  0.25)  
+  colnames(dataFilt) <- gsub("normalized_count_","",colnames(dataFilt))
+  dataDEGs <- TCGAanalyze_DEA(mat1 = dataFilt[,normal],
+                              mat2 = dataFilt[,tumour],
+                              Cond1type = "Normal",
+                              Cond2type = "Tumor",logFC.cut=1,fdr.cut = 0.01) 
+  
+  deg<-gsub("\\|.*", "", rownames(dataDEGs))
+  
+  sub_net<-SpidermiRanalyze_direct_subnetwork(data,BI=deg)
+  return(sub_net)
+}
