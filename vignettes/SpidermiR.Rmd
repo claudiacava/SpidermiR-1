@@ -418,8 +418,6 @@ mol<-SpidermiRanalyze_Community_detection_bi(data=comm,BI=gi)
 
 `SpidermiRanalyze_DEnetworkTCGA` integrates the information of differential analysis of TCGA data in the network. The final result will be a network with only DE genes or miRNAs depending  whether the user chooses mRNA or miRNA  TCGA data.
 ```{r, eval = FALSE}
-devtools::install_github("BioinformaticsFMRP/TCGAbiolinks")
-library(TCGAbiolinks)
 miRNA_cN <-data.frame(gA=c('hsa-let-7a','SSTR1'),gB=c('FOXM1','GATA5'),stringsAsFactors=FALSE)
 cancer <- "TCGA-BRCA"
 PlatformCancer <- "Illumina HiSeq"
