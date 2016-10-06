@@ -525,11 +525,11 @@ SpidermiRanalyze_mirnanet_pharm<-function(mir_ph,net){
 #' @export
 #' @return a network miRNA-gene differentially expressed as calculated by TCGAbiolinks package. The user can select the samples and cancer type from TCGA portal.
 #' @examples
-#' miRNA_cN <-data.frame(gA=c('hsa-let-7a','SSTR1'),gB=c('FOXM1','GATA5'),stringsAsFactors=FALSE)
+#' miRNA_cN <-data.frame(gA=c('hsa-let-7a','GABRA1'),gB=c('FOXM1','KRT13'),stringsAsFactors=FALSE)
 #' cancer <- "TCGA-BRCA"
 #' PlatformCancer <- "Illumina HiSeq"
-#' tumour<-c("TCGA-BH-A0DL-01A-11R-A115-07","TCGA-AO-A03P-01A-11R-A00Z-07")
-#' normal<-c("TCGA-BH-A209-11A-42R-A157-07","TCGA-E9-A1N4-11A-33R-A14M-07") 
+#' tumour<-c("TCGA-AO-A0JI-01A-21R-A056-07","TCGA-E9-A5FL-01A-11R-A27Q-07")
+#' normal<-c("TCGA-A7-A13F-11A-42R-A12P-07","TCGA-BH-A1FH-11B-42R-A13Q-07") 
 #' de_int<-SpidermiRanalyze_DEnetworkTCGA(data=miRNA_cN,
 #'                                        cancer,
 #'                                        PlatformCancer,
@@ -545,16 +545,17 @@ SpidermiRanalyze_DEnetworkTCGA <- function(data,
   
   dataType <- "normalized_results"
   
+
+  
   query <- GDCquery(project = cancer,
-                    data.category = "Gene expression",
+                   data.category = "Gene expression",
                     data.type = "Gene expression quantification",
-                    platform = PlatformCancer, 
+                   platform = PlatformCancer, 
                     file.type  = dataType, 
-                    barcode = c(tumour,normal),
+                   barcode = c(tumour,normal),
                     legacy = TRUE)
   
-  #CancerProject <- paste0("TCGA-",cancer)
-  #DataDirectory <- paste0(path,"GDC_",gsub("-","_",CancerProject))
+
   GDCdownload(query,directory = path)
   dataAssy <- GDCprepare(query,  directory = path, summarizedExperiment = FALSE)
   
